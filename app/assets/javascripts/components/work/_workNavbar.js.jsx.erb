@@ -1,0 +1,38 @@
+class WorkNavbar extends React.Component {
+    constructor(props)
+    {
+        super(props);
+        this.state = {};
+    }
+
+    render()
+    {
+        return (
+            <nav className="navbar-plusing work_layout" id="navbar-plusing">
+                <div className="navbar-plusing-brand">
+                    <a href='/app' className="link-plusing">
+                        <div className="logo font-title-default">
+                            <img src={"<%= image_url('logo.svg') %>"} width="30" style={{display: 'inline-block', marginRight: 7}} />
+                            Plusing
+                        </div>
+                    </a>
+                </div>
+                <div className="spreadsheet-name">
+                    <input className="spreadsheet-name"
+                          placeholder="Untitled-work.plusing"
+                          type="text"
+                          name="work[name]"
+                          defaultValue={!this.props.work.budget ? "Untitled.work" : this.props.work.budget}
+                          id="work_name" />
+                    <div>
+                        <i>Saved</i>
+                    </div>
+                </div>
+                <button className="navbar-plusing-toggle" id="button-collapse">
+                    <hr className="button-collapse" />
+                    <hr className="button-collapse" />
+                </button>
+            </nav>
+        )
+    }
+}

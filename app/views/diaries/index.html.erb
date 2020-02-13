@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Diaries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Hr observation</th>
+      <th>Third observation</th>
+      <th>Observation</th>
+      <th>Start</th>
+      <th>End</th>
+      <th>Work</th>
+      <th>Weather</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @diaries.each do |diary| %>
+      <tr>
+        <td><%= diary.hr_observation %></td>
+        <td><%= diary.third_observation %></td>
+        <td><%= diary.observation %></td>
+        <td><%= diary.start %></td>
+        <td><%= diary.end %></td>
+        <td><%= diary.work %></td>
+        <td><%= diary.weather %></td>
+        <td><%= link_to 'Show', diary %></td>
+        <td><%= link_to 'Edit', edit_diary_path(diary) %></td>
+        <td><%= link_to 'Destroy', diary, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Diary', new_diary_path %>

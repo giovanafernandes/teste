@@ -1,0 +1,36 @@
+<%= form_tag("/signup", method: "post", model: @user) do %>
+	<div class="card-layout">
+		<div class="form-card">
+			<h3 class="font-title-default card-brand">Plusing</h3>
+			<h6 class="card-title">Sign up</h6>
+			<p class="card-warning">Create your Plusing Account</p>
+			<div class="field form-group">
+				<%= text_field_tag :name, "", class: "textfield-plusing", placeholder: " Your name" %>
+			</div>
+
+			<div class="field form-group">
+				<%= text_field_tag :email, "", class: "textfield-plusing", placeholder: " Type your e-mail" %>
+			</div>
+
+			<div class="field form-group">
+				<%= password_field_tag :password, "", class: "textfield-plusing", placeholder: " Password" %>
+			</div>
+			<div class="field">
+			<%= password_field_tag :password_confirmation, "", class: "textfield-plusing", placeholder: " Password" %>
+			</div>
+			<p id="alert">
+				<% if @user.errors.any? %>
+					<% @user.errors.full_messages.each do |message| %>
+						<%= message %>
+					<% end %>
+				<% end %>
+				<%= link_to login_path, class: "link-plusing card-option card-forgot" do %>
+					Have an account? Log in!
+				<% end %>
+			</p>
+			<div class="form-group">
+				<%= submit_tag "Sign up", class: "btn-plusing success card-action" %>
+			</div>
+		</div>
+	</div>
+<% end %>

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @card.name %>
+</p>
+
+<p>
+  <strong>Cpf:</strong>
+  <%= @card.cpf %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @card.number %>
+</p>
+
+<p>
+  <strong>Validate:</strong>
+  <%= @card.validate %>
+</p>
+
+<p>
+  <strong>Security code:</strong>
+  <%= @card.security_code %>
+</p>
+
+<%= link_to 'Edit', edit_card_path(@card) %> |
+<%= link_to 'Back', cards_path %>

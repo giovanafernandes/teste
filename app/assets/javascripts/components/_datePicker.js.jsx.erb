@@ -1,0 +1,37 @@
+class DatePicker extends React.Component {
+    constructor(props)
+    {
+        super(props);
+        this.state = {}
+    }
+
+    componentDidMount() {
+        const that = this;
+        $('#' + this.props.id).datepicker({
+            format: 'dd/mm/yyyy',
+            language: 'pt-BR',
+            autoclose: true
+        }).on('hide', function(){
+            date = $('#' + that.props.id).val();
+            that.props.handleStartDateChange(that.props.id, date)
+        });
+    }
+
+    componentWillUnmount() {
+        $('#' + this.props.id).datepicker('destroy');
+    }
+
+    render()
+    {
+        return (
+            <input type="text"
+                  className="form-control textfield-plusing"
+                  name={this.props.name}
+                  id={this.props.id}
+                  defaultValue={this.props.value}
+                  data-provide='datepicker'
+                  ref={input => this.props.reference = input}
+                  placeholder="dd/mm/yyyy" />
+        )
+    }
+}

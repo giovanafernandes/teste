@@ -1,0 +1,80 @@
+class CurrencyField extends React.Component
+{
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            isDeleting: false,
+            permitted: "0123456789"
+        }
+    }
+
+    handleInputChange(e, value)
+    {
+        var lastKey = value.charAt(value.length-1)
+        if(!this.state.isDeleting)
+        {
+            if(this.state.permitted.includes(lastKey))
+            {
+                var newValue = this.props.salary + lastKey
+
+                this.props.setSalary(newValue);
+            }
+        } else {
+            var length = this.props.salary.length;
+            if(length > 1)
+            {
+                var newValue = this.props.salary.substring(0, length - 1);
+
+                this.props.setSalary(newValue);
+
+                this.setState({
+                    isDeleting: false
+                })
+            } else {
+                this.setState({
+                    isDeleting: false
+                })
+            }
+        }
+    }
+
+    handleOnKeyDown(e, value)
+    {
+        if(e.key == 'Backspace') this.setState({ isDeleting: true })
+    }
+
+    componentDidMount()
+    {
+        this.props.handleSubmitAction();
+    }
+
+    render()
+    {
+        return (
+            <div>
+                <div className="input-group col-12">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text secondary-font">R$</span>
+                    </div>
+                    <input
+                        className="form-control textfield-plusing"
+                        style={{boxShadow: 'none'}}
+                        maxLength="12"
+                        type="text"
+                        ref={input => currency = input}
+                        value={this.props.salary}
+                        onChange={(e) => this.handleInputChange(e, currency.value)}
+                        onKeyDown={(e) => this.handleOnKeyDown(e, currency.value)}
+                        onKeyUp={() => this.props.handleSubmitAction()}
+                        placeholder={this.props.placeholder}
+                        name={this.props.name}
+                        id={this.props.id} />
+                </div>
+                <input type="hidden"
+                    ref={this.props.reference}
+                    value={this.props.salary} />
+            </div>
+        );
+    }
+}

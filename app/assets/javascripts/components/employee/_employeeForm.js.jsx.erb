@@ -1,0 +1,83 @@
+class EmployeeForm extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            jobs: this.props.jobs,
+            branch_id: this.props.branch_id,
+            isOpen: false
+        };
+    }
+
+    jobCrudDialog (event) {
+        event.preventDefault();
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+
+    renderJobs()
+    {
+        if(this.state.jobs && this.state.jobs.length)
+        {
+            var jobs = this.state.jobs.map(f => {
+                return (
+                    <option key={f.id} value={f.id}>{f.description}</option>
+                );
+            });
+        }
+        return jobs;
+    }
+
+    addNewJob(job)
+    {
+        this.setState({
+            jobs: [job].concat(this.state.jobs)
+        });
+    }
+
+    render() {
+        isCreating = this.props.employee.id == null;
+
+        return (
+            <div>
+                <form className="simple_form new_employee" id="new_employee" noValidate="novalidate" action={isCreating ? "/employees" : ("/employees/" + this.props.employee.id)} acceptCharset="UTF-8" method="post">
+                    {!isCreating &&
+                        <input type="hidden" name="_method" value="patch" />
+                    }
+                    <input name="utf8" type="hidden" value="✓" />
+                    <input type='hidden' name='authenticity_token' value={this.props.authenticity_token} />
+                    <hr />
+                    <div className="field form-group">
+                        <div className="form-group string optional employee_name">
+                            <label className="form-control-label string optional" htmlFor="employee_name">Nome completo</label>
+                            <input className="form-control string optional textfield-plusing" defaultValue={this.props.employee.name} placeholder=" Nome" type="text" name="employee[name]" id="employee_name" />
+                        </div>
+                    </div>
+                    <div className="field">
+                        <div className="form-group select required employee_job">
+                            <label className="form-control-label select required" htmlFor="employee_job_id">Função <abbr title="required">*</abbr></label>
+                            <a className="float-right link-plusing" onClick={(event) => this.jobCrudDialog(event)}>
+                                <img src={"<%= image_url('plus.svg') %>"} width="20" />
+                            </a>
+                            <select className="form-control select required textfield-plusing"
+                                name="employee[job_id]"
+                                id="employee_job_id"
+                                defaultValue={!isCreating ? this.props.employee.job_id : 0}>
+                                { this.renderJobs() }
+                            </select>
+                        </div>
+                    </div>
+                    <div className="actions">
+                        <input type="submit" name="commit" value="Salvar" className="btn btn-plusing success card-action" data-disable-with="Create Employee" />
+                    </div>
+                </form>
+                <NewJob show={this.state.isOpen}
+                    onClose={(event) => this.jobCrudDialog(event)}
+                    addNewJob={this.addNewJob.bind(this)}
+                    jobs={this.state.jobs}
+                    branch_id={this.state.branch_id}>
+                </NewJob>
+            </div>
+        );
+    }
+}

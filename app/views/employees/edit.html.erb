@@ -1,0 +1,24 @@
+<div class="row window">
+    <div class="col-md-12">
+        <p id="notice"><%= notice %></p>
+
+        <div class="row">
+            <div class="col-6">
+                <%= link_to employees_path, class: "link-plusing", style: "float: left;margin-right: 15px;" do %>
+                  <img src="<%= image_url("back.svg") %>" width="30">
+                <% end %>
+                <h5 class="table-title">Editar funcionário</h5>
+            </div>
+            <div class="col-6" style="text-align: right;">
+                <%= link_to @employee, class: "link-plusing", style: "float: right;" do %>
+                    <img src="<%= image_url("view.svg") %>" width="30">
+                <% end %>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <%= react_component 'EmployeeForm', authenticity_token: form_authenticity_token, employee: @employee, jobs: @jobs, branch_id: @branch_id %>
+            </div>
+        </div>
+    </div>
+</div>

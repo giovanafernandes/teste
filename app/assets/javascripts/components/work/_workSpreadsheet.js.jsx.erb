@@ -1,0 +1,29 @@
+class WorkSpreadsheet extends React.Component {
+    constructor(props)
+    {
+        super(props);
+        this.state = {};
+    }
+
+    render()
+    {
+        return (
+            <div>
+                <WorkNavbar
+                    work={this.props.work}/>
+                <WorkNavbarMenu
+                    current_user={this.props.current_user}/>
+                <WorkForm
+                    authenticity_token={this.props.form_authenticity_token}
+                    branch_id={this.props.branch_id}
+                    branches={this.props.branches}
+                    companies={this.props.companies}
+                    users={this.props.users}
+                    work={this.props.work}
+                    colors={this.props.colors}
+                    tasks={this.props.tasks}
+                />
+            </div>
+        )
+    }
+}

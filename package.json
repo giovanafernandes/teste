@@ -1,0 +1,14 @@
+{
+  "name": "Plusing",
+  "private": true,
+  "dependencies": {
+    "@material-ui/core": "^4.8.3",
+    "@rails/webpacker": "4.2.2",
+    "core-js": "^3.6.2",
+    "react-datepicker": "^2.11.0",
+    "regenerator-runtime": "^0.13.3"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.10.1"
+  }
+}

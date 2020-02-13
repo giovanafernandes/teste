@@ -1,0 +1,22 @@
+<div class="row window">
+    <div class="col-md-12">
+        <p id="notice"><%= notice %></p>
+
+        <div class="row">
+            <div class="col-12">
+                <%= link_to @company, class: "link-plusing", style: "float: right" do %>
+                    <img src="<%= image_url("view.svg") %>" width="30">
+                <% end %>
+                <%= link_to companies_path, class: "link-plusing", style: "float: left;margin-right: 15px;" do %>
+                    <img src="<%= image_url("back.svg") %>" width="30">
+                <% end %>
+                <h5 class="table-title">Editar local</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <%= render 'form', user: @company %>
+            </div>
+        </div>
+    </div>
+</div>

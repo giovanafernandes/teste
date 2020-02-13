@@ -1,0 +1,37 @@
+<%= simple_form_for @company, :defaults => { :input_html => { :class => "textfield-plusing" } } do |f| %>
+  <hr>
+  <div class="field form-group">
+      <%= f.input :name, placeholder: " Nome", label: " Nome da empresa" %>
+  </div>
+  <div class="field form-group">
+      <%= f.input :business_name, placeholder: " Nome fantasia", label: " Nome fantasia" %>
+  </div>
+
+  <div class="field form-group input-grid">
+      <%= f.input :cnpj, placeholder: " Digite o cnpj da empresa", label: " CNPJ" %>
+      <div></div>
+      <%= f.input :zip_code, placeholder: " Digite o CEP da empresa", label: " CEP" %>
+  </div>
+  <div class="field form-group input-grid">
+      <%= f.input :state, placeholder: " Ex: Paraná", label: " Estado" %>
+      <div></div>
+      <%= f.input :city, placeholder: " Ex: Curitiba", label: " Cidade" %>
+  </div>
+  <div class="field">
+      <%= f.input :neighborhood, placeholder: " Ex: Jardim Água Verde",  label: "Bairro" %>
+  </div>
+  <div class="field form-group input-grid">
+      <%= f.input :street, placeholder: " ex: Rua Arthur Bernandes", label: " Rua" %>
+      <div></div>
+      <%= f.input :number, placeholder: " ex: 403", label: " Número" %>
+  </div>
+  <div class="field form-group input-grid">
+      <%= f.input :state_registration, placeholder: " Digite o registro estadual",  label: " Registro estadual" %>
+      <div></div>
+      <%= f.input :rg, placeholder: " Digite seu RG", label: " RG" %>
+  </div>
+  <div class="actions">
+    <%= f.button :submit, value: "Salvar", class: "btn-plusing success card-action" %>
+  </div>
+<% end %>
+<input type="hidden" id="active" value="2">

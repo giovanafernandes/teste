@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-12">
+        <%= react_component 'WorkSpreadsheet',
+            authenticity_token: form_authenticity_token,
+            branch_id: current_user.branch_id,
+            branches: @branches,
+            companies: @companies,
+            tasks: Array.new,
+            users: @users,
+            current_user: current_user,
+            work: @work,
+            colors: @colors %>
+    </div>
+</div>

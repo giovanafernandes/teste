@@ -1,0 +1,185 @@
+class TaskManager extends React.Component {
+
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            isNotAbleToSubmit: true,
+            formFields: {},
+            priority: 1,
+            priorities: ['Baixa', 'Média', 'Alta'],
+        }
+    }
+
+    renderTasks()
+    {
+        var tasks = this.props.tasks.map(task => {
+            return (
+                <div className="form-group row divider" key={task.id}>
+                    <div className="col-8 container">
+                        <div className="form-group row">
+                            <div className="col">
+                                <input type="text" className="form-control no-border" defaultValue={task.description}/>
+                            </div>
+                        </div>
+                        <div className="form-group row" style={{marginTop: -15}}>
+                            <div className="col-1" style={{marginTop: -3}}>
+                                <label className="sub-tasks form-control-label">
+                                    <input name="task[priority]" type="hidden" defaultValue="0" />
+                                    <span className="priority-level sub-tasks">
+                                        Prioridade: {this.printPriorityIcons(task.priority)}
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-4 container">
+                        <div className="form-group row">
+                            <div className="col" style={{margin: 6}}>
+                                <span className="close">
+                                    <img src={"<%= image_url('edit.svg') %>"} width="13" />
+                                </span>
+                            </div>
+                            <div className="col" style={{margin: 7}}>
+                                <span className="close">
+                                    &times;
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        });
+
+        return tasks;
+    }
+
+    handleFormSubmit(e)
+    {
+        var description = this.state.formFields.description.value;
+        var priority = this.state.formFields.priority.value;
+
+        e.preventDefault();
+        e.target.reset();
+        let body = JSON.stringify({task: {description: description, priority: priority, branch_id: this.props.branch_id} })
+
+        fetch("/api/v1/tasks", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body,
+        }).then((response) => {
+            return response.json()
+        }).then((task) => {
+            this.props.addNewTask(task)
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    handleSubmitAction()
+    {
+        var description = this.state.formFields.description.value;
+
+        var isNotItAble = false
+        if(!description || description == undefined || description == "" || description.length == 0) isNotItAble = true
+
+        this.setState({
+            isNotAbleToSubmit: isNotItAble
+        });
+    }
+
+    printPriorityIcons(priority)
+    {
+        const html = [];
+
+        for(let i = 0; i < priority; i++)
+        {
+            html.push(<i key={i}>!</i>);
+        }
+
+        return html;
+    }
+
+    printPriorityDescription()
+    {
+        return [this.state.priorities[this.state.priority-1]];
+    }
+
+    handlePriorityChange()
+    {
+        if(this.state.priority == 3) this.setState({ priority: 1 })
+        else this.setState({ priority: this.state.priority + 1 })
+    }
+
+    render() {
+        if(!this.props.show) {
+          return null;
+        }
+
+        return (
+            <div className="modal_window">
+                <div className="modal_content">
+                    <form className="simple_form new_task" onSubmit={(e) =>
+                            this.handleFormSubmit(e)} id="new_task" acceptCharset="UTF-8">
+                        <input name="utf8" type="hidden" value="✓" />
+                        <input type="hidden" name="authenticity_token" value="KmjAU/Cz5oocAY9AsrFBeT4f+PKABl2ubDp4QAEV5/p3xNYsJntoF+7pBw3+DeyuGVTlY1zYDW+9ozxEwfK8EA==" />
+                        <span className="close" onClick={this.props.onClose}>&times;</span>
+                        <p className="default-font">Criar Tarefa</p>
+                        <hr />
+                        <div className="container">
+                            <div className="form-group row">
+                                <div className="col-12">
+                                    <input className="form-control textfield-plusing"
+                                    ref={input => this.state.formFields.description = input}
+                                    onChange={() => this.handleSubmitAction()}
+                                    placeholder=" Tarefa" type="text" name="task[description]" id="task_description" />
+                                </div>
+                            </div>
+                            <div className="form-group row">
+                                <div className="col-3">
+                                    <label className="switch form-control-label" style={{fontSize: 14}}>
+                                        <input id="task_priority" ref={input => this.state.formFields.priority = input} className="integer optional" defaultValue={this.state.priority} type="hidden" name="task[priority]"/>
+                                        Prioridade<br />
+                                        <span className="priority-level"
+                                            onClick={() => this.handlePriorityChange()}>
+                                            {this.printPriorityIcons(this.state.priority)}
+                                        </span>
+                                    </label>
+                                </div>
+                                <div className="col-4 offset-5" style={{paddingTop: 12}}>
+                                    <input type="submit" name="commit" value="Salvar" className="btn btn-plusing success card-action" disabled={this.state.isNotAbleToSubmit}/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <p className="default-font">Tarefas</p>
+                    <hr />
+                    <div className="container">
+                        <div className="form-group row">
+                            <div className="input-group col-12">
+                              <input type="text" placeholder=" Procurar tarefa" className="form-control textfield-plusing" style={{boxShadow: 'none'}}/>
+                              <div className="input-group-append">
+                                <span className="input-group-text">
+                                    <img src={"<%= image_url('search.svg') %>"} width="20" />
+                                </span>
+                              </div>
+                            </div>
+                        </div>
+                        <div className="scroll-window">
+                            { this.renderTasks() }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+TaskManager.propTypes = {
+  onClose: PropTypes.func.isRequired,
+  show: PropTypes.bool,
+  tasks: PropTypes.array,
+  children: PropTypes.node
+};

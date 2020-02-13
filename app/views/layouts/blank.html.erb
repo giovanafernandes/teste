@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+      <title>Plusing Build</title>
+      <%= csrf_meta_tags %>
+      <%= csp_meta_tag %>
+      <link rel="stylesheet" type="text/css" href="../../assets/stylesheets/open-iconic-master/font/open-iconic-bootstrap.css">
+      <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+      <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+      <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body style="height: 100%;overflow-x: hidden;">
+      <%= yield %>
+  </body>
+</html>

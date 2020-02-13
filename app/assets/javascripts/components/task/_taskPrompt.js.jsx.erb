@@ -1,0 +1,195 @@
+class TaskPrompt extends React.Component
+{
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            formFields: {},
+            defaultColor: this.props.colors[0],
+            showColorPicker: false
+        };
+    }
+
+    componentDidMount()
+    {
+        const that = this;
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                that.setState({ showColorPicker: false })
+            }
+        }
+    }
+
+    printPriority(priority)
+    {
+        let str;
+        switch (priority) {
+          case 1:
+              str = "!"
+          break;
+
+          case 2:
+              str = "!!"
+          break;
+
+          case 3:
+              str = "!!!"
+          break;
+
+          default:
+          break;
+        }
+
+        return str;
+    }
+
+    shuffle(arra1) {
+        var ctr = arra1.length, temp, index;
+
+    // While there are elements in the array
+        while (ctr > 0) {
+    // Pick a random index
+            index = Math.floor(Math.random() * ctr);
+    // Decrease ctr by 1
+            ctr--;
+    // And swap the last element with it
+            temp = arra1[ctr];
+            arra1[ctr] = arra1[index];
+            arra1[index] = temp;
+        }
+        return arra1;
+    }
+
+    showColorPicker()
+    {
+        this.setState({
+            showColorPicker: true
+        })
+    }
+
+    changeColor(color)
+    {
+        this.setState({
+            showColorPicker: false,
+            defaultColor: color
+        });
+    }
+
+    renderColors()
+    {
+        let colors = this.props.colors.map(color => {
+            return (
+                <button className="color-picker color-grid"
+                    key={color.id}
+                    style={{backgroundColor: color.code}}
+                    onClick={() => this.changeColor(color)}></button>
+            )
+        })
+
+        return colors;
+    }
+
+    renderTasks()
+    {
+        var tasks = this.props.tasks.map((task, index) =>
+        {
+            return (
+                <li key={task.id}
+                    className="list-group-item task-item"
+                    onClick={() => this.props.setTaskToTableField(task)}
+                    style={{backgroundColor: task.color.code}}>
+                    <span>{this.printPriority(task.priority)}</span>
+                    <input type="text" className="input-inside-spreadsheet" style={{textAlign: 'left'}} defaultValue={task.description}/>
+                </li>
+            )
+        })
+
+        tasks.push(<li key="0" className="list-group-item task-item task-form">
+                        <div>
+                            <select ref={input => this.state.formFields.priority = input} name="task[priority]" className="input-inside-spreadsheet rounded-select"
+                                style={{textAlign: 'center', height: 'auto'}}>
+                                <option key="1" value="1">!</option>
+                                <option key="2" value="2">!!</option>
+                                <option key="3" value="3">!!!</option>
+                            </select>
+                        </div>
+                        <div className="dropdown">
+                            { this.state.showColorPicker &&
+                                <div id="color_picker" className="dropdown-content">
+                                    {this.renderColors()}
+                                </div>
+                            }
+                            <input type="hidden" name="task[color_id]" value={this.state.defaultColor.id} />
+                            <input type="button"
+                                id="color_toogle"
+                                onClick={() => this.showColorPicker()}
+                                className="input-inside-spreadsheet color-picker dropbtn"
+                                style={{backgroundColor: this.state.defaultColor.code}} />
+                        </div>
+                        <div className="input-group">
+                            <input type="text" ref={input => this.state.formFields.description = input} name="task[description]" className="form-control bottom-border-only"
+                                placeholder=" Nova tarefa"
+                                style={{height: 21}}/>
+                            <div className="input-group-append" onClick={() =>
+                                    this.handleFormSubmit()}>
+                                <span className="input-group-text btn-plusing success" style={{height: 20, display: 'flex', margin: 0, padding: 2}} id="basic-addon2">
+                                    <img src={'<%= image_url("checked-white.svg") %>'} style={{width: 15, height: 15}} />
+                                </span>
+                            </div>
+                        </div>
+                  </li>);
+
+        return tasks;
+    }
+
+    handleFormSubmit(e)
+    {
+        var description = this.state.formFields.description.value;
+        var priority = this.state.formFields.priority.value;
+
+        let body = JSON.stringify({task: {description: description, priority: priority, work_id: this.props.work.id, color_id: this.state.defaultColor.id} })
+
+        this.state.formFields.form.reset();
+        fetch("/api/v1/tasks", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: body,
+        }).then((response) => {
+            return response.json()
+        }).then((task) => {
+            task.color = this.state.defaultColor;
+            this.props.addNewTask(task)
+        }).catch(error => {
+            console.log(error);
+        })
+    }
+
+    render()
+    {
+        if(!this.props.isOpen) {
+          return null;
+        }
+
+        return (
+            <div className="prompt_content" style={{top: this.props.y, left: this.props.x}}>
+                <form className="simple_form new_task" ref={input => this.state.formFields.form = input} id="new_task" acceptCharset="UTF-8">
+                    <input name="utf8" type="hidden" value="✓" />
+                    <input type="hidden" name="authenticity_token" value="KmjAU/Cz5oocAY9AsrFBeT4f+PKABl2ubDp4QAEV5/p3xNYsJntoF+7pBw3+DeyuGVTlY1zYDW+9ozxEwfK8EA==" />
+                    <span className="close" style={{marginTop: -3}} onClick={this.props.onClose}>&times;</span>
+                    <p className="small-label" style={{marginBottom: -15}}>Tarefas</p>
+                    <input className="search-small-field"
+                    ref={input => this.state.formFields.search = input}
+                    onChange={() => this.handleSearchAction()}
+                    placeholder=" Pesquisar" type="text" name="search" id="task_search" />
+                    <div className="list">
+                          <ul className="list-group">
+                              {this.renderTasks()}
+                          </ul>
+                    </div>
+                </form>
+            </div>
+        );
+    }
+}

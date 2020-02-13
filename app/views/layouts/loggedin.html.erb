@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Plusing Build</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="stylesheet" type="text/css" href="../../assets/stylesheets/open-iconic-master/font/open-iconic-bootstrap.css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body style="height: 100%;" class="hide-overflow">
+      <%
+          images = ['dash.svg', 'diary.svg', 'industry.svg', 'hammer.svg', 'admin.svg', 'worker.svg', 'schedule.svg']
+          links = ['/app', '/diaries', '/companies', '/works', '/users', '/employees', '/schedules']
+          titles = ['Dashboard', 'Diários', 'Locais', 'Obras', 'Usuários', 'Funcionários', 'Cronogramas']
+      %>
+
+      <% if !session[:membership] %>
+          <%= form_tag("/savecompany", method: "post", model: @membership) do %>
+            <div class="warning">
+                <div class="warning-box container">
+                    <div class="row" style="padding: 10px;padding-top: 25px;">
+                        <div class="col-12">
+                            <h4 id="h4-empresa">
+                                Sua empresa
+                            </h4>
+                            <h6 style="font-size: 11px;margin-bottom: 40px;">
+                                Nos conte sobre sua empresa
+                            </h6>
+                            <div class="field form-group">
+                                <%= text_field_tag :name, "", class: "textfield-plusing", id: "empresa-nome", placeholder: " Nome da empresa" %>
+                            </div>
+                            <div class="field form-group">
+                                <%= text_field_tag :cnpj, "", class: "textfield-plusing", id: "empresa-nome", placeholder: " Digite o CNPJ da empresa" %>
+                            </div>
+                            <p class="font-secondary">
+                                O Logo pode ser colocado depois nas configurações
+                            </p>
+                            <p id="alert"></p>
+                            <div style="margin-top: 60px">
+                                <input type="submit" name="commit" value="Continuar avaliação" style="font-size: 10px;width: auto;" class="link-plusing card-option">
+                                <input type="submit" name="commit" value="Efetuar pagamento" style="font-size: 13px;width: auto;" class="btn-plusing success card-action">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <% end %>
+      <% elsif session[:membership] && session[:testing] %>
+          <%= react_component 'RemainingDays', authenticity_token: form_authenticity_token %>
+      <% end %>
+    <nav class="navbar-plusing">
+      <div class="navbar-plusing-brand">
+        <%= link_to '/app', class: "link-plusing" do %>
+            <div class="logo font-title-default">
+              <img src="<%= image_url('logo.svg') %>" width="30" style="display: inline-block;">
+              Plusing
+            </div>
+        <% end %>
+      </div>
+      <button class="navbar-plusing-toggle" id="button-collapse">
+        <hr class="button-collapse">
+        <hr class="button-collapse">
+      </button>
+    </nav>
+    <div class="container-fluid" style="height: 100%;">
+        <div class="menu-plusing" style="width: 100%;">
+          <ul class="menu-list" id="collapse-content">
+            <% images.each_with_index do |img, index| %>
+                <% classes = "navbar-item menu-item" %>
+                <% if current_page.include? links[index] %>
+                      <% classes.concat(" active") %>
+                <% end %>
+                <li class="<%= classes %>" style="<%= index == 0 ? 'padding: 0px;border-top: 1px solid rgba(0,0,0,0.04);' : 'padding: 0px;' %>">
+                  <a href="<%= links[index] %>" class="btn-block">
+                    <img src="<%= image_url(img) %>" width="20">
+                    <%= titles[index] %>
+                  </a>
+                </li>
+            <% end %>
+            <li class="navbar-item menu-item user-settings" style="padding: 0px;">
+              <nav class="btn-block" id="settings-link">
+                <a href="settings">
+                  <img src="<%= image_url('user.svg') %>" class="user-avatar" width="40">
+                  <div style="display: inline-block">
+                      <i class="user-name"><%= current_user.name %></i>
+                      <i class="user-email"><%= current_user.email %></i>
+                      <% if session[:membership] && session[:remaining_days] < 31 %>
+                          <i class="observation"><%= session[:remaining_days] %> dias restantes</i>
+                      <% end %>
+                  </div>
+                </a>
+                <div></div>
+                  <div style="text-align: end;">
+                      <ul style="padding: 0px;margin: 5px;">
+                          <li class="xl-item">
+                              <a href="/help">
+                                  <img src="<%= image_url("help.svg") %>" width="15">
+                              </a>
+                          </li>
+                          <li class="xl-item">
+                              <a href="/logout">
+                                  <img src="<%= image_url("logout.svg") %>" width="15">
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+              </nav>
+              <button type="button" class="btn-block" id="settings-btn">
+                  <img src="<%= image_url('user.svg') %>" class="user-avatar" width="40">
+                  <img src="<%= image_url('drop.svg') %>" width="15">
+                  <i class="user-name"><%= current_user.name %></i>
+              </button>
+              <div class="user-settings-menu menu-hide" id="settings">
+                  <ul style="padding: 0px;margin: 0px;">
+                      <li class="settings-header">
+                          <div class="container">
+                              <div class="row">
+                                  <div class="col-3" style="margin: 0px;padding: 0px;">
+                                      <img src="<%= image_url('user.svg') %>" class="user-avatar" width="80">
+                                  </div>
+                                  <div class="col-9">
+                                      <%= current_user.name %>
+                                      <div class="w-100"></div>
+                                      <i><%= current_user.email %></i>
+                                      <div class="w-100"></div>
+                                      <form action="/settings" method="get">
+                                          <input type="submit" class="btn-plusing success secondary" value="Account">
+                                      </form>
+                                  </div>
+                              </div>
+                          </div>
+                      </li>
+                      <li class="xl-item">
+                          <a href="/help">
+                              <img src="<%= image_url("help.svg") %>" width="15">Help
+                          </a>
+                      </li>
+                      <li class="xl-item">
+                          <a href="/logout">
+                              <img src="<%= image_url("logout.svg") %>" width="15">Sign out
+                          </a>
+                      </li>
+                  </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      <div class="container scroll-overflow" id="right-view">
+        <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>

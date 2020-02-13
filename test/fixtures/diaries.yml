@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hr_observation: MyString
+  third_observation: MyString
+  observation: MyString
+  start: 2019-12-30 11:21:18
+  end: 2019-12-30 11:21:18
+  work: one
+  weather: one
+
+two:
+  hr_observation: MyString
+  third_observation: MyString
+  observation: MyString
+  start: 2019-12-30 11:21:18
+  end: 2019-12-30 11:21:18
+  work: two
+  weather: two

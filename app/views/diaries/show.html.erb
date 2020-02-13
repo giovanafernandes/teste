@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Hr observation:</strong>
+  <%= @diary.hr_observation %>
+</p>
+
+<p>
+  <strong>Third observation:</strong>
+  <%= @diary.third_observation %>
+</p>
+
+<p>
+  <strong>Observation:</strong>
+  <%= @diary.observation %>
+</p>
+
+<p>
+  <strong>Start:</strong>
+  <%= @diary.start %>
+</p>
+
+<p>
+  <strong>End:</strong>
+  <%= @diary.end %>
+</p>
+
+<p>
+  <strong>Work:</strong>
+  <%= @diary.work %>
+</p>
+
+<p>
+  <strong>Weather:</strong>
+  <%= @diary.weather %>
+</p>
+
+<%= link_to 'Edit', edit_diary_path(@diary) %> |
+<%= link_to 'Back', diaries_path %>

@@ -1,0 +1,33 @@
+I"¸(function() {
+  $(document).ready(function() {
+    var resetTableScroll, resizeSpreadsheet;
+    $(window).resize(function() {
+      return resizeSpreadsheet();
+    });
+    $('#tbody tbody').scroll(function() {
+      $('#tcounter thead').prop("scrollTop", this.scrollTop);
+      return $('#theader thead').prop("scrollLeft", this.scrollLeft);
+    });
+    resizeSpreadsheet = function() {
+      var leftHeight, navbarHeight, tBodyWidth, windowHeight;
+      leftHeight = $('#left').height();
+      windowHeight = $(window).height();
+      navbarHeight = $('#navbar-plusing').height();
+      $('#right').height(windowHeight - leftHeight - navbarHeight - 50);
+      $('#tbody').height(windowHeight - leftHeight - navbarHeight - 40);
+      tBodyWidth = $('#tbody tbody').width();
+      return $('#theader').width(tBodyWidth + 28);
+    };
+    resetTableScroll = function() {
+      var scrollLeft, scrollTop;
+      scrollTop = $("#tbody tbody").scrollTop();
+      scrollLeft = $("#tbody tbody").scrollLeft();
+      $('#tcounter thead').prop("scrollTop", scrollTop);
+      return $('#theader thead').prop("scrollLeft", scrollLeft);
+    };
+    resizeSpreadsheet();
+    return resetTableScroll();
+  });
+
+}).call(this);
+:ET

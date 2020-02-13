@@ -1,0 +1,28 @@
+<%= form_tag sessions_path do |form| %>
+	<div class="card-layout">
+		<div class="form-card">
+			<h3 class="font-title-default card-brand">Plusing</h3>
+			<h6 class="card-title">Sign in</h6>
+			<p class="card-warning">Use your Plusing Account</p>
+			<div class="field form-group">
+				<%= text_field_tag :email, "", class: "textfield-plusing", placeholder: " Username or E-mail" %>
+			</div>
+
+			<div class="field form-group">
+				<%= password_field_tag :password, "", class: "textfield-plusing", placeholder: " Password" %>
+			</div>
+			<p id="alert">
+				<%= alert %><br>
+				<a href="/forgot" class="link-plusing card-option card-forgot">
+					Esqueceu a senha?
+				</a>
+			</p>
+			<div class="form-group">
+                <%= link_to register_path, class: "link-plusing card-option" do %>
+                  Create Account
+                <% end %>
+				<%= submit_tag "Sign in", class: "btn-plusing success card-action" %>
+			</div>
+		</div>
+	</div>
+<% end %>

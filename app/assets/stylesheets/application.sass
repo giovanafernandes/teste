@@ -1,0 +1,919 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ */
+
+//= require bootstrap-datepicker
+//= require_tree .
+
+@import "bootstrap"
+@import "utilities/variables"
+
+*
+	box-sizing: border-box
+	-webkit-overflow-scrolling: touch
+	-webkit-appearance: none
+
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+select:active,
+textarea:focus,
+input:focus,
+select:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active
+	outline: 0px !important
+	-webkit-appearance: none
+	box-shadow: none !important
+
+a:focus, input[type="button"]:focus, input[type="submit"]:focus, button
+	outline: none !important
+
+ul
+	list-style-type: none
+
+.navbar-plusing
+	position: relative
+	height: 55px
+	background-color: $primaryColor
+	z-index: 99
+
+.logo
+	position: relative
+	top: 8px
+	left: 3px
+	display: block
+
+.navbar-plusing-brand
+	margin-bottom: 7px
+	margin-left: 15px
+	white-space: nowrap
+
+.font-default
+	color: $secondaryColor
+
+.font-secondary
+	color: $btnBorderHover
+	font-size: 9px
+	text-align: left
+
+.title
+	margin: 0.4vh
+	margin-left: 1vh
+
+.font-title-default
+	font-size: 24px
+	list-style-type: none
+	background: linear-gradient(to right, $tertiary 45%, $secondaryColor)
+	background-clip: border-box
+	-webkit-background-clip: text
+	-webkit-text-fill-color: transparent
+	width: auto
+	display: inline-block
+	height: 45px
+
+.navbar-plusing-toggle
+	position: absolute
+	top: 5px
+	right: 5px
+	width: 45px
+	height: 35px
+	background-color: transparent
+	cursor: pointer
+	border: none
+
+.navbar-plusing-toggle:focus
+	outline: none
+
+.button-collapse
+	width: 100%
+	height: 2px
+	border: none
+	margin: 1px
+	margin-top: 5px
+	background-color: $secondaryColor
+	color: $secondaryColor
+	transition: all .3s ease-in-out
+	-webkit-transition: all .3s ease-in-out
+
+.navbar-plusing-collapse
+	visibility: hidden
+	opacity: 0
+	transition: all .3s ease-in-out
+	-webkit-transition: all .3s ease-in-out
+	padding: 0px
+	border-top: 1px solid rgba(0,0,0,0.04)
+
+.left-appended-button
+	border-right: none
+	border-top-right-radius: 0px
+	border-bottom-right-radius: 0px
+
+.right-appended-button
+	border-top-left-radius: 0px
+	border-bottom-left-radius: 0px
+
+.btn-plusing
+	border: 1px solid $secondaryColor
+
+.btn-plusing:hover
+	background-color: white
+
+.btn-plusing.success
+	background-color: $successColor
+	font-family: $defaultFont
+	border: none
+	color: white
+	padding: 7px
+	text-align: center
+	font-weight: 500
+	border-radius: 5px
+	text-decoration: none
+	font-size: 16px
+	cursor: pointer
+
+.btn-plusing.sucess:hover
+	background-color: white
+
+.btn-plusing.secondary
+	background-color: $primaryColor !important
+	color: $tertiary
+
+#cadastrar
+	margin-right: -4px
+	color: $secondaryColor
+
+#cadastrar:hover
+	margin-right: -4px
+	background-color: $secondaryColor
+	color: white
+
+.btn
+	font-size: 12px
+
+#login
+	border: 1px solid $tertiary
+	background-color: $tertiary
+	color: white
+
+#login:hover
+	color: $tertiary
+	background-color: white
+
+.up
+	transform: rotate(40deg)
+
+.down
+	transform: rotate(-40deg)
+
+.navbar-plusing-list
+	background-color: $primaryColor
+	margin: 0px
+	padding: 0px
+
+.navbar-item
+	list-style-type: none
+	padding: 5px
+	border-bottom: 1px solid rgba(0,0,0,0.04)
+	font-family: $defaultFont
+	letter-spacing: 0.4px
+	cursor: pointer
+
+.navbar-item a
+	color: $default-font-color
+	height: 100%
+	margin: 0px
+	padding: 8px
+	padding-left: 15px
+	text-decoration: none
+
+.navbar-item a:hover
+	background-color: rgba(0,0,0,0.8)
+	color: $secondaryColor
+
+.navbar-item a img
+	margin: 7px
+
+.input-grid
+	display: grid
+	grid-template-columns: 49% 2% 49%
+
+.form-radios-list
+	display: block
+	width: 100%
+
+.radioslist
+	display: grid
+	grid-template-columns: 23.5% 2% 23.5% 2% 23.5% 2% 23.5%
+
+.switch
+	position: relative
+	display: inline-block
+	text-align: center
+	font-size: 14px
+	width: 42px
+	height: 24px
+
+.switch-header
+	font-size: 10px
+	margin: 2px
+	text-align: left
+	color: $default-font-color
+	font-family: $defaultFont
+
+.switch-small
+	position: relative
+	display: inline-block
+	text-align: center
+	font-size: 10px
+	width: 21px
+	height: 12px
+
+.switch br
+	margin-top: 2px
+
+.switch-small br
+	margin-top: 2px
+
+.switch input
+	opacity: 0
+	width: 0
+	height: 0
+
+.slider
+	position: absolute
+	cursor: pointer
+	top: 0
+	left: 0
+	right: 0
+	bottom: 0
+	background-color: #ccc
+	-webkit-transition: .4s
+	transition: .4s
+
+.slider:before
+	position: absolute
+	content: ""
+	height: 18px
+	width: 18px
+	left: 3px
+	bottom: 3px
+	background-color: white
+	-webkit-transition: .4s
+	transition: .4s
+
+.slider-small:before
+	position: absolute
+	content: ""
+	height: 9px
+	width: 9px
+	left: 1.5px
+	bottom: 1.5px
+	background-color: white
+	-webkit-transition: .4s
+	transition: .4s
+
+input:checked + .slider
+	background-color: $secondaryColor
+
+input:focus + .slider
+	box-shadow: 0 0 1px $secondaryColor
+
+input:checked + .slider:before
+	-webkit-transform: translateX(18px)
+	-ms-transform: translateX(18px)
+	transform: translateX(18px)
+
+input:checked + .slider-small:before
+	-webkit-transform: translateX(9px)
+	-ms-transform: translateX(9px)
+	transform: translateX(9px)
+
+.slider.round
+	border-radius: 24px
+
+.slider-small.round
+	border-radius: 12px
+
+.slider.round:before
+	border-radius: 50%
+
+.input-grid .textfield-plusing
+	display: inline-grid
+
+.form-control-label
+	color: $btnBorderHover !important
+
+.small-textfield
+	width: 100%
+	border-radius: 3px
+	border: none
+	box-shadow: none
+	font-family: $successColor
+	font-size: 11px
+	padding: 0px
+	height: 20px
+
+.textfield-plusing
+	width: 100%
+	border-radius: 3px
+	border: 1px solid $btnBorder
+	box-shadow: 2px 2px 2px $btnBorder
+	font-family: $defaultFont
+	font-size: 14px
+	padding: 4px
+	height: 40px
+
+.divider
+	border-bottom: 1px solid $btnBorder
+
+.textfield-plusing:hover
+	border: 1px solid $btnBorderHover
+
+
+.textfield-plusing:focus
+	border: 1px solid $secondaryColor
+
+.card-layout
+	width: 100%
+	margin-top: 10vh
+	text-align: center
+	display: block
+
+.card-title
+	font-family: $defaultFont
+	color: $default-font-color
+	margin: 0px
+	margin-bottom: 10px
+
+.form-card
+	width: 350px
+	border: 1px solid $btnBorder
+	box-shadow: 1px 1px 1px rgba(0,0,0,0.1)
+	display: inline-block
+	padding: 25px
+	border-radius: 7px
+
+.card-brand
+	font-size: 30px
+	margin: 0px
+	padding: 0px
+
+.card-warning
+	font-family: $defaultFont
+	color: $default-font-color
+	font-size: 11px
+
+.card-option
+	width: 150px
+	border: none
+	background-color: transparent
+	cursor: pointer
+	text-align: left
+	padding-top: 15px
+	float: left
+
+.card-action
+	width: 100px
+	padding-left: 3px
+	float: right
+
+.link-plusing
+	color: $blueColor
+
+.link-plusing:hover
+	background-color: transparent
+	text-decoration: none
+	cursor: pointer
+
+.card-forgot
+	float: right
+	margin: 0px
+	padding: 0px
+	width: 100%
+
+#alert
+	width: 100%
+	text-align: left
+	padding-left: 5px
+	margin: 0px
+	height: 15px
+	font-size: 13px
+	margin-bottom: 50px
+	color: $dangerColor
+
+.menu-list
+	margin: 0px
+	padding: 0px
+	height: 0px
+	visibility: hidden
+	opacity: 0
+	max-height: 0
+	transition: all .3s ease-in-out
+	-webkit-transition: all .3s ease-in-out
+
+.menu-plusing
+	width: 250px
+	background-color: $primaryColor
+
+.plusing-group-spreadsheet
+	margin: 0 !important
+
+.show-menu
+	opacity: 1 !important
+	visibility: visible
+	max-height: 600px !important
+	height: auto !important
+
+.grid-template
+	position: relative
+
+#right-view
+	padding-top: 20px
+
+.container-fluid
+	padding: 0px
+	margin: 0px
+
+.warning
+	display: block
+	position: fixed
+	z-index: 99999
+	padding-top: 0px
+	text-align: center
+	left: 0
+	top: 0
+	width: 100%
+	height: 100%
+	overflow: auto
+	background-color: rgb(0,0,0)
+	background-color: rgba(0,0,0,0.4)
+
+.warning-box
+	width: 80%
+	margin-top: 25vh
+	display: inline-block
+	height: auto
+	background-color: white
+
+.user-settings-menu
+	display: none
+
+#settings-btn
+	background-color: transparent
+	display: none
+	border: none
+	cursor: pointer
+
+table.plusing
+	border-top-left-radius: 25px
+	border-top-right-radius: 25px
+	overflow: hidden
+	width: 100%
+	height: 100%
+
+table.plusing th
+	color: $tertiary
+	background: linear-gradient(transparent 85%, $tertiary, $secondaryColor)
+
+table.table-condensed
+	width: 100%
+	overflow: hidden
+	font-family: $defaultFont
+	color: $tertiary
+	font-weight: normal
+
+.datepicker table tr td.active, .datepicker table tr td.active:hover, .datepicker table tr td.active.disabled, .datepicker table tr td.active.disabled:hover
+	background-color: $btnBorderHover !important
+	background-image: linear-gradient(to bottom, $btnBorderHover, $btnBorder) !important
+	background-repeat: repeat-x
+	border-radius: 2px
+
+table.table-condensed th, table.table-condensed td
+	font-weight: normal
+	font-family: $defaultFont
+	font-size: 11px
+
+table.table-condensed td:first-child, table.table-condensed td:last-child
+	color: $secondaryColor
+
+table.table-condensed td.old, table.table-condensed td.new
+	color: $btnBorderHover !important
+
+table.table-condensed td.old:first-child, table.table-condensed td.new:last-child
+	color: $secondaryColor !important
+	opacity: 0.4
+
+table.table-condensed th.dow
+	color: $btnBorderHover
+	font-size: 13px
+
+table.table-condensed th:first-child, table.table-condensed th:last-child
+	color: $secondaryColor
+
+table.table-condensed th.prev, table.table-condensed th.next
+	color: $btnBorderHover
+
+table.plusing tbody tr
+	cursor: pointer
+
+.datepicker
+	border-radius: 0
+	box-shadow: none !important
+
+.checked
+		background: image_url("checked.svg")
+
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th
+	border: none
+	height: 50px
+	font-size: calc(0.5em + 0.5vw)
+
+#settings-link:hover
+	cursor: default
+
+#settings-link
+	display: grid
+	grid-template-columns: 49% 2% 49%
+
+#settings-link div, #settings-link a
+	margin: 0px
+
+#settings-link a:hover
+	background-color: transparent
+	cursor: pointer
+
+#settings-link div i
+	width: 100%
+	display: block
+	font-style: normal
+
+#settings-link div i.observation
+	font-size: 8px
+	color: $dangerColor
+
+#settings-link img
+	display: inline-block
+	vertical-align: top
+	margin: 7px
+
+#settings-link .user-email
+	font-size: 8px
+	color: $tertiary
+
+.font-warning
+	color: $dangerColor
+	font-size: 24px
+	margin-bottom: -20px
+
+.table-title
+	padding: 2px
+	margin-left: 5px
+
+.modal_content
+	background-color: #fefefe
+	margin: auto
+	padding: 20px
+	border: 1px solid $modalBorders
+	display: inline-block
+	width: 410px
+	text-align: left
+
+.modal_window
+	display: block
+	position: fixed
+	z-index: 99999
+	padding-top: 0px
+	text-align: center
+	left: 0
+	top: 0
+	width: 100%
+	height: 100%
+	overflow: auto
+	background-color: rgb(0,0,0)
+	background-color: rgba(0,0,0,0.4)
+
+.small-label
+	font-size: 12px
+	font-family: $defaultFont
+	color: $spreadsheetHeadersFontColor
+
+.search-small-field
+	width: 100%
+	border-radius: 0
+	border: 1px solid $btnBorder
+	font-family: $defaultFont
+	padding-left: 5px
+	padding-right: 5px
+	height: 25px
+	font-size: 11px
+
+.search-small-field::placeholder
+	opacity: 0.3
+
+.close
+	color: #aaaaaa
+	float: right
+	font-weight: bold
+
+.close:hover, .close:focus
+	color: #000
+	text-decoration: none
+	cursor: pointer
+
+.default-font
+	color: $default-font-color
+	font-family: $defaultFont
+
+.secondary-font
+	color: $btnBorderHover
+	font-family: $defaultFont
+
+.no-border
+	border: 0
+	padding: 0
+	font-size: 12px
+	box-shadow: none
+
+.scroll-window
+	height: auto
+	max-height: 100px
+	overflow-x: hidden
+	overflow-y: auto
+
+table.spreadsheet-table
+	border-collapse: collapse
+	border-spacing: 0
+	border: 1px solid #ddd
+
+table.spreadsheet-table thead th
+	text-align: center
+	border: 1px solid $btnBorder
+	width: 120px
+	min-width: 120px
+
+table.spreadsheet-table tbody td
+	border: 1px solid rgba(0,0,0,0.075)
+	width: 120px
+	overflow: hidden
+	min-width: 120px
+	height: 25px
+	padding: 0
+
+.input-inside-spreadsheet
+	width: 100%
+	height: 100%
+	text-align: center
+	background-color: transparent
+	margin: 0
+	border: none
+
+.no-typing
+	cursor: pointer
+
+	&:focus
+		outline: none
+
+.rounded-select
+		border-radius: 50%
+		font-size: 11px
+		border: 1px solid $blueColor
+		color: $blueColor
+
+.color-picker
+		border-radius: 50%
+		font-size: 11px
+		border: 1px solid $btnBorderHover
+		text-align: center
+		height: 20px
+
+.spreadsheet-row-count
+	width: 40px !important
+	max-width: 40px
+	min-width: 40px !important
+	text-align: center
+
+td.spreadsheet-row-count
+	font-weight: lighter
+	color: $btnBorderHover
+
+table.spreadsheet-table th
+	font-weight: normal
+	color: $spreadsheetHeadersFontColor
+
+td.spreadsheet-row-count, table.spreadsheet-table th
+	background-color: $spreadsheetHeaders
+	border: 1px solid $spreadsheetHeadersBorders !important
+	font-size: 11px
+	font-family: $defaultFont
+
+th.spreadsheet-row-count
+	background-color: white !important
+
+@media (min-width: 768px)
+	html, body
+		height: 100%
+
+	.hide-overflow
+		overflow-y: hidden
+
+	.scroll-overflow
+		overflow-y: scroll
+
+	#right-view
+		margin-top: 0px
+		padding-top: 10px
+		height: 100%
+
+	.window
+		padding: 25px
+		padding-top: 0px
+		padding-bottom: 100px !important
+
+	.button-collapse
+		display: none
+
+	.navbar-plusing-list
+		width: auto
+		position: absolute
+		top: 8px
+		right: 15px
+
+	.navbar-item
+		display: inline-block
+		border-bottom: none
+
+	.navbar-item a:hover
+		background-color: transparent
+
+	.navbar-plusing-collapse
+		visibility: visible
+		opacity: 1
+
+	.menu-list
+		margin: 0px
+		padding: 0px
+
+	.container-fluid
+		display: grid
+		grid-template-columns: 250px auto
+
+	.container-fluid.spreadsheet
+		display: grid
+		grid-template-columns: 100%
+
+	.menu-list
+		visibility: visible
+		opacity: 1
+
+	.menu-item
+		padding: 0px
+		width: 100%
+		background-color: $primaryColor
+		list-style-type: none
+		padding: 5px
+		border-bottom: 1px solid rgba(0,0,0,0.04)
+		font-family: $defaultFont
+		letter-spacing: 0.4px
+		cursor: pointer
+
+	.menu-item a
+		color: $default-font-color
+		height: 100%
+		margin: 0px
+		padding: 8px
+		padding-left: 15px
+		text-decoration: none
+
+	.menu-item a:hover, .menu-item.active a
+		background-color: rgba(0,0,0,0.8)
+		color: $secondaryColor
+
+	.user-settings
+		right: 10px !important
+
+	.user-settings:hover
+		cursor: default
+
+	.user-settings-menu
+		display: block
+
+	.warning-box
+		width: 400px
+
+	.user-settings
+		padding: 0px
+		margin: 0px
+		width: 45px
+		height: 45px
+		position: absolute
+		width: auto
+		max-width: 660px
+		border: none
+		top: 0
+		right: 0
+		z-index: 9999
+
+	.user-settings a
+		margin-top: -5px
+
+	.user-settings a:hover
+		background-color: transparent !important
+
+	.user-settings-menu
+		padding: 0px
+		margin: 0px
+		position: absolute
+		width: 290px
+		top: 70px
+		right: 10px
+		background-color: $primaryColor
+		border-radius: 5px
+		box-shadow: 1px 1px 1px $btnBorder
+		padding: 0px
+
+	.user-settings-menu:after
+		content: ''
+		position: absolute
+		top: 0
+		left: 85%
+		width: 0
+		height: 0
+		border: 15px solid transparent
+		border-bottom-color: $tertiary
+		border-top: 0
+		margin-left: -15px
+		margin-top: -15px
+
+	.settings-header
+		background-color: $tertiary
+		margin: 0px !important
+		padding: 0px !important
+
+	.settings-header .container
+		width: 100%
+		padding: 20px
+		padding-top: 10px
+		margin: 0px
+
+	.user-settings-menu ul
+		border-radius: 5px
+		overflow: hidden
+
+	.user-settings-menu li
+		padding: 0px
+		margin: 0px
+		padding-top: 5px
+		padding-bottom: 5px
+		list-style-type: none
+		color: $default-font-color
+
+	.user-settings-menu i
+		font-size: 10px
+		font-weight: normal
+		font-style: normal
+		color: white
+
+	.user-settings-menu .col-9
+		font-size: 11px
+		color: $secondaryColor
+		padding-left: 17px
+
+	.xl-item
+		font-weight: normal
+
+	.user-name
+		display: none
+
+	.menu-hide
+		display: none
+
+	#settings-btn
+		display: block
+
+	#settings-link
+		display: none
+
+	.form-radios-list
+		display: grid
+		width: 49% 2% 49%

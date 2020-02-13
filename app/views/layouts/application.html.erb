@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Plusing Build</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <link rel="stylesheet" type="text/css" href="../../assets/stylesheets/open-iconic-master/font/open-iconic-bootstrap.css">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body style="height: 100%;">
+    <nav class="navbar-plusing">
+      <div class="navbar-plusing-brand">
+        <%= link_to root_url, class: "link-plusing" do %>
+            <div class="logo font-title-default">
+              <img src="<%= image_url('logo.svg') %>" width="30" style="display: inline-block;">
+              Plusing
+            </div>
+        <% end %>
+      </div>
+      <button class="navbar-plusing-toggle" id="button-collapse">
+        <hr class="button-collapse">
+        <hr class="button-collapse">
+      </button>
+      <div class="navbar-plusing-collapse" id="collapse-content">
+        <ul class="navbar-plusing-list">
+          <li class="navbar-item" style="padding: 0px;">
+            <a href="" class="btn-block">
+              Parceiros
+            </a>
+          </li>
+          <li class="navbar-item" style="padding: 0px;">
+            <a href="" class="btn-block">
+              Sobre
+            </a>
+          </li>
+          <li class="navbar-item auth-form">
+            <%= link_to register_path, class: "btn left-appended-button btn-plusing", id: "cadastrar" do %>
+              Cadastrar
+            <% end %>
+            <%= link_to login_path, class: "btn right-appended-button", id: "login" do %>
+              Login
+            <% end %>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <div class="container" id="right-view">
+        <%= yield %>
+    </div>
+  </body>
+</html>

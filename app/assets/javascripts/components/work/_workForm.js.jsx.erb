@@ -1,0 +1,421 @@
+class WorkForm extends React.Component {
+
+    constructor(props)
+    {
+        super(props);
+        today = new Date();
+        tomorrow = new Date(today.getTime());
+        if(tomorrow.getMonth() == 11) tomorrow.setFullYear(tomorrow.getFullYear() + 1);
+        else tomorrow.setMonth(tomorrow.getMonth() + 1);
+
+        this.state = {
+            users: this.props.users,
+            branches: this.props.branches,
+            companies: this.props.companies,
+            branch_id: this.props.branch_id,
+            tasks: this.props.tasks,
+            work_start: this.props.work.work_start == null ? today : this.props.work.work_start,
+            work_end: this.props.work.work_end == null ? tomorrow : this.props.work.work_end,
+            rows: 100,
+            selectedTableField: [],
+            formFields: {},
+            isOpen: false,
+            months: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+            days: {},
+            tf: {},
+            rowClasses: {},
+            promptX: 0,
+            promptY: 0,
+            selectorX: 0,
+            selectorY: 0
+        };
+
+        this.isMouseDown = false;
+        this.clicked = false;
+
+        this.addAllTasks();
+    }
+
+    addAllTasks()
+    {
+        this.props.tasks.map((task, index) =>
+        {
+            task.order = "T" + (index+1);
+            task.description = task.order + " - " + task.description;
+            task.color = this.props.colors[task.color_id-1];
+        });
+    }
+
+    componentDidMount()
+    {
+        $('.datepicker').datepicker({
+    				format: 'dd/mm/yyyy',
+    				language: 'pt-BR'
+    		});
+
+        let that = this;
+        $(function () {
+          var isMouseDown = false;
+          $("#tbody td input")
+            .mousedown(function () {
+              isMouseDown = true;
+              if(!that.clicked)
+              {
+                  that.setTaskManagerPosition($(this).attr("id"));
+              }
+              $(this).toggleClass("highlighted");
+              return false;
+            })
+            .mouseover(function () {
+              if (isMouseDown) {
+                console.log($(this).attr('id'));
+                $(this).toggleClass("highlighted");
+              }
+            });
+
+          $(document)
+            .mouseup(function () {
+              isMouseDown = false;
+            });
+        });
+    }
+
+    addNewTask(task)
+    {
+        task.order = "T" + (this.state.tasks.length + 1);
+        task.description = task.order + " - " + task.description;
+        this.setState({
+            tasks: this.state.tasks.concat(task)
+        });
+    }
+
+    renderBranches()
+    {
+        if(this.state.branches && this.state.branches.length)
+        {
+            var branches = this.state.branches.map(f => {
+                return (
+                    <option key={f.id} value={f.id}>{f.name}</option>
+                );
+            });
+        }
+        return branches;
+    }
+
+    renderUsers()
+    {
+        if(this.state.users && this.state.users.length)
+        {
+            var users = this.state.users.map(f => {
+                return (
+                    <option key={f.id} value={f.id}>{f.name}</option>
+                );
+            });
+        }
+        return users;
+    }
+
+    renderCompanies()
+    {
+        if(this.state.companies && this.state.companies.length)
+        {
+            var companies = this.state.companies.map(f => {
+                return (
+                    <option key={f.id} value={f.id}>{f.name}</option>
+                );
+            });
+        }
+        return companies;
+    }
+
+    handleTableRowFocus(index)
+    {
+        this.setTaskManagerPosition(index);
+    }
+
+    setTaskManagerPosition(index)
+    {
+        let scrollTop = $("#tbody tbody").scrollTop();
+        let scrollLeft = $("#tbody tbody").scrollLeft();
+        let elem = this.state.days[index];
+
+        console.log(elem.offsetTop - scrollTop);
+        console.log(elem.offsetLeft - scrollLeft);
+
+        this.clicked = true;
+
+        this.setState({
+            promptY: elem.offsetTop - scrollTop,
+            promptX: (elem.offsetLeft+elem.offsetWidth)-scrollLeft,
+            selectorY: elem.offsetTop - scrollTop,
+            selectorX: elem.offsetLeft - scrollLeft,
+            selectedTableField: this.state.selectedTableField.concat(index),
+            isOpen: true
+        });
+    }
+
+    setTaskToTableField(task)
+    {
+        let newTf = this.state.tf;
+        for(let i = 0; i < this.state.selectedTableField.length; i++)
+        {
+            newTf[this.state.selectedTableField[i]] = task;
+        }
+        this.setState({ tf: newTf });
+        // console.log(this.state.tf[this.state.selectedTableField[0]]);
+    }
+
+    preventTyping(e)
+    {
+        e.preventDefault();
+        return false;
+    }
+
+    // onMouseDownTfield(index)
+    // {
+    //     this.isMouseDown = true;
+    //     this.startSelecting = true;
+    //     var elem = this.state.days[index];
+    //     this.setTaskManagerPosition(index);
+    //     console.log(elem);
+    //     elem.mouseup();
+    //     return false;
+    // }
+    //
+    // onMouseOverTfield(index)
+    // {
+    //     var elem = this.state.days[index];
+    //     console.log('MouseEnter: ' + elem);
+    // }
+    //
+    // onMouseUpTfield()
+    // {
+    //     // this.isMouseDown = false;
+    // }
+
+    renderSpreadsheetBody()
+    {
+        let table = []
+
+        for (let i = 0; i < this.state.rows; i++)
+        {
+            let children = []
+
+            let start = new Date(this.state.work_start.getTime());
+            let end = new Date(this.state.work_end.getTime());
+            end.setDate(end.getDate()+1);
+            let j = new Date(start.getTime());
+
+            for(let x = 0; j.getTime() != end.getTime(); x++)
+            {
+                  var order = "";
+                  var color = "";
+                  var title = "";
+                  var isHighlighted = "";
+
+                  if(typeof this.state.tf[`_row${i}${x}`] !== 'undefined')
+                  {
+                      order = this.state.tf[`_row${i}${x}`].order;
+                      color = this.state.tf[`_row${i}${x}`].color.code;
+                      title = this.state.tf[`_row${i}${x}`].description;
+                  }
+
+                  children.push(<td key={'body_' + i + '_' + x}
+                      data-toggle="tooltip" title={title}
+                      style={{backgroundColor: color}}
+                      ref={input => this.state.days[`_row${i}${x}`] = input}
+                      onClick={() => this.handleTableRowFocus(`_row${i}${x}`)}>
+                          <input className="input-inside-spreadsheet no-typing"
+                                id={`_row${i}${x}`}
+                                defaultValue={order}
+                                onKeyDown={() => this.preventTyping(event)}
+                                type="text" />
+                      </td>)
+                  j.setDate(j.getDate() + 1);
+            }
+            table.push(<tr key={'body_row_' + i}>{children}</tr>)
+        }
+
+        return table
+    }
+
+    renderSpreadsheetCounter()
+    {
+        let table = []
+
+        for (let j = 0; j < this.state.rows; j++)
+        {
+            let children = []
+            children.push(<th className="spreadsheet-row-count" key={'counter_th_' + j}>{j+1}</th>)
+            table.push(<tr key={'counter_tr_' + j}>{children}</tr>)
+        }
+
+        return table
+    }
+
+    renderSpreadsheetHeader()
+    {
+        let table = []
+
+        let children = []
+
+        let start = new Date(this.state.work_start.getTime());
+        let end = new Date(this.state.work_end.getTime());
+        end.setDate(end.getDate()+1);
+        let j = new Date(start.getTime());
+        let x = 0;
+
+        while(j.getTime() != end.getTime())
+        {
+            if(x == 0)
+            {
+                children.push(<th className="spreadsheet-row-count" key={'header_th_' + x}></th>)
+            } else {
+                children.push(<th key={'header_th_' + x}>{this.state.months[j.getMonth()]} {j.getDate()}</th>)
+                j.setDate(j.getDate() + 1);
+            }
+            x++;
+        }
+
+        table.push(<tr key={'header'}>{children}</tr>)
+
+        return table
+    }
+
+    handleTaskPromptVisibility()
+    {
+        this.setState({
+            isOpen: !this.state.isOpen
+        })
+    }
+
+    handleStartDateChange(id, date)
+    {
+        dateRows = date.split("/");
+        dateToBeChanged = new Date(this.state[id]);
+
+        dateToBeChanged.setFullYear(dateRows[2]);
+        dateToBeChanged.setMonth(dateRows[1]-1);
+        dateToBeChanged.setDate(dateRows[0]);
+
+        this.setState({
+            [id]: dateToBeChanged
+        });
+    }
+
+    render()
+    {
+        isCreating = this.props.work.id == null;
+        work_start = this.state.work_start;
+        work_end = this.state.work_end;
+
+        today = ('0' + work_start.getDate()).slice(-2) + '/' + ('0' + (work_start.getMonth()+1)).slice(-2) + '/' + work_start.getFullYear();
+        tomorrow = ('0' + work_end.getDate()).slice(-2) + '/' + ('0' + (work_end.getMonth()+1)).slice(-2) + '/' + work_end.getFullYear();
+
+        return (
+            <div className="container-fluid spreadsheet">
+                <div className="box">
+                    <div className="left" id="left">
+                        <form className="simple_form new_work" id="new_work" noValidate="novalidate" action={isCreating ? "/works" : ("/works/" + this.props.work.id)} acceptCharset="UTF-8" method="post">
+                            {!isCreating &&
+                                <input type="hidden" name="_method" value="patch" />
+                            }
+                            <input name="utf8" type="hidden" value="✓" />
+                            <input type='hidden' name='authenticity_token' value={this.props.authenticity_token} />
+                            <div className="field plusing-group-spreadsheet">
+                                  <div className="form-group select required work_company input-group plusing-group-spreadsheet">
+                                      <div className="input-group-prepend">
+                                          <div className="input-group-text card-warning">Empresa</div>
+                                      </div>
+                                      <select className="form-control select required textfield-plusing"
+                                            name="work[company_id]"
+                                            id="work_company_id"
+                                            defaultValue={this.props.work.company_id}>
+                                            {this.renderCompanies()}
+                                      </select>
+                                  </div>
+                            </div>
+                            <div className="field plusing-group-spreadsheet">
+                                <div className="form-group select required work_user input-group plusing-group-spreadsheet">
+                                    <div className="input-group-prepend">
+                                        <div className="input-group-text card-warning">Encarregado</div>
+                                    </div>
+                                    <select className="form-control select required textfield-plusing"
+                                        name="work[user_id]"
+                                        id="work_user_id"
+                                        defaultValue={this.props.work.user_id}>
+                                        { this.renderUsers() }
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="field plusing-group-spreadsheet">
+                                <div className="form-group select required work_branch input-group plusing-group-spreadsheet">
+                                    <div className="input-group-prepend">
+                                        <div className="input-group-text card-warning">Filial</div>
+                                    </div>
+                                    <select className="form-control select required textfield-plusing"
+                                        name="work[branch_id]"
+                                        id="work_branch_id"
+                                        defaultValue={this.props.work.branch_id}>
+                                        { this.renderBranches() }
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="field plusing-group-spreadsheet">
+                                <div className="form-group required work_start input-group plusing-group-spreadsheet">
+                                    <div className="input-group-prepend">
+                                        <div className="input-group-text card-warning">Início</div>
+                                    </div>
+                                    <DatePicker
+                                        reference={this.state.formFields.work_start}
+                                        handleStartDateChange={this.handleStartDateChange.bind(this)}
+                                        name="work[start]"
+                                        value={today}
+                                        id="work_start" />
+                                    <div className="input-group-prepend">
+                                        <div className="input-group-text card-warning">Entrega</div>
+                                    </div>
+                                    <DatePicker
+                                        reference={this.state.formFields.work_end}
+                                        handleStartDateChange={this.handleStartDateChange.bind(this)}
+                                        value={tomorrow}
+                                        name="work[end]"
+                                        id="work_end" />
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <table className="spreadsheet-table table-header" id="theader">
+                        <thead>
+                            {this.renderSpreadsheetHeader()}
+                        </thead>
+                    </table>
+                    <div className="work-bottom-container" id="right">
+                        <table className="spreadsheet-table table-counter" id="tcounter">
+                            <thead>
+                                {this.renderSpreadsheetCounter()}
+                            </thead>
+                        </table>
+                        <table className="spreadsheet-table table-body" id="tbody">
+                            <tbody>
+                                {this.renderSpreadsheetBody()}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <TaskSelector x={this.state.selectorX}
+                    y={this.state.selectorY}/>
+                <TaskPrompt tasks={this.state.tasks}
+                    onClose={(event) => this.handleTaskPromptVisibility(event)}
+                    isOpen={this.state.isOpen}
+                    addNewTask={this.addNewTask.bind(this)}
+                    setTaskToTableField={this.setTaskToTableField.bind(this)}
+                    work={this.props.work}
+                    branch_id={this.state.branch_id}
+                    colors={this.props.colors}
+                    x={this.state.promptX}
+                    y={this.state.promptY} />
+            </div>
+        );
+    }
+}

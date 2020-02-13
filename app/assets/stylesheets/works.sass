@@ -1,0 +1,271 @@
+// Place all the styles related to the Works controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+@import "bootstrap"
+@import "utilities/variables"
+
+.plusing-container
+    display: grid
+    grid-template-columns: auto auto
+
+@include media-breakpoint-up(sm)
+    .plusing-container
+        display: grid
+        grid-template-columns: auto auto auto
+
+@include media-breakpoint-up(md)
+    .plusing-container
+        display: grid
+        grid-template-columns: auto auto auto auto
+
+.item1
+    grid-area: menu
+    margin: auto
+
+.item2
+    grid-area: main
+    font-family: $defaultFont
+    color: $default-font-color
+
+.item3
+    grid-area: footer
+    font-family: $defaultFont
+    color: $default-font-color
+
+.grid-item
+    border: 1px solid $btnBorder
+    border-radius: 15px
+    font-size: 12px
+    display: grid
+    grid-template-areas: 'menu main main main main main''menu footer footer footer footer footer'
+    grid-gap: 10px
+    margin: 10px
+    padding: 5px
+
+.table-counter
+    display: inline-grid
+    border: 1px !important
+    width: 40px
+    margin: 0
+    padding: 0
+    overflow: hidden !important
+    width: 100%
+
+.table-counter thead
+    display: block
+    overflow-y: hidden
+    box-sizing: content-box
+
+.table-counter thead th
+    height: 25px
+
+.table-header
+    display: inline-block
+    border: 1px !important
+    margin-bottom: -6px
+    overflow: hidden !important
+    width: 100%
+
+.table-header thead
+    display: block
+    overflow-x: hidden
+
+.table-body
+    display: inline-grid
+    border: 1px !important
+    overflow: scroll !important
+    margin: 0
+    width: 100%
+    padding: 0
+
+.table-body tbody
+    display: block
+    overflow: scroll
+
+.table-body tbody td input.highlighted
+    background-color: rgba(0,0,0,0.3)
+
+.work-bottom-container
+    font-size: 12px
+    display: grid
+    width: 100%
+    overflow: hidden
+    grid-template-columns: 40px auto
+    margin: 0px
+
+.grid-container > div
+    background-color: rgba(255, 255, 255, 0.8)
+    text-align: center
+    padding: 10px 0
+    font-size: 30px
+
+.input-group.plusing-group-spreadsheet>.input-group-prepend
+    flex: 0 0 12%
+
+.input-group.plusing-group-spreadsheet .input-group-text, .input-group.plusing-group-spreadsheet:hover .input-group-text:hover
+    width: 100%
+    background-color: $spreadsheetHeaders
+    border-top: 0px
+    border-left: 0px
+    border-right: 0px
+    border-bottom: 1px solid $btnBorder
+
+.plusing-group-spreadsheet input, .plusing-group-spreadsheet input:hover, .plusing-group-spreadsheet select, .plusing-group-spreadsheet select:hover
+    border-top: 0px
+    border-left: 0px
+    border-right: 0px
+    box-shadow: none
+    border-bottom: 1px solid $btnBorder
+    font-size: 12px
+
+.plusing-group-spreadsheet input:focus, .plusing-group-spreadsheet select:focus
+    border-top: 0px
+    border-left: 0px
+    border-right: 0px
+    font-size: 12px
+
+.work_layout
+    display: grid
+    width: 100%
+    grid-template-columns: 40% 40% auto
+
+div.spreadsheet-name
+    display: block
+    padding-top: 5px
+    width: 170px
+    text-align: center
+    overflow: hidden
+
+div.spreadsheet-name div
+    display: block
+    height: 12px
+    margin: 0
+    padding: 0
+
+div.spreadsheet-name div i
+    font-size: 9px
+    color: $spreadsheetHeadersFontColor
+    font-style: normal
+    margin: 0
+    padding: 0
+    vertical-align: top
+
+input.spreadsheet-name
+    border: 0px
+    display: inline-block
+    padding-right: 10px
+    padding-left: 10px
+    font-size: 13px
+    height: 15px
+    text-align: center
+    background-color: transparent
+    color: $blueColor
+    width: 170px
+
+span.priority-level
+    display: block
+    width: 70px
+    min-width: 70px
+    -moz-user-select: none
+    -webkit-user-select: none
+    -ms-user-select: none
+
+span.priority-level i
+    font-size: 18px
+    font-weight: bold
+    font-style: normal
+
+span.priority-level.sub-tasks i, label.sub-tasks
+    font-size: 12px
+
+div.prompt_content
+    position: absolute
+    resize: both
+    background-color: white
+    padding: 5px
+    border-radius: 10px
+    overflow: auto
+    display: block
+    min-width: 240px
+    width: 240px
+    min-height: 90px
+    box-shadow: 2px 2px 2px 2px $btnBorder
+    -webkit-transition: all .2s ease-out
+    -moz-transition: all .2s ease-out
+    -o-transition: all .2s ease-out
+    transition: all .2s ease-out
+
+div.task_selector
+    position: absolute
+    border: 1px solid $blueColor
+    -webkit-transition: all .2s ease-out
+    -moz-transition: all .2s ease-out
+    -o-transition: all .2s ease-out
+    transition: all .2s ease-out
+
+li.task-item
+    display: grid
+    grid-template-columns: 20px auto
+    border-radius: 0
+    padding: 8px
+    color: #434343
+    font-family: $defaultFont
+    border: none
+
+li.task-item.task-form
+    grid-template-columns: 20px 20px auto
+
+li.task-item:hover
+    cursor: pointer
+
+li.task-item:first-child
+    border-radius: 0
+
+li.task-item:last-child
+    border-radius: 0
+
+li.task-item span
+    width: 20px
+    max-width: 20px
+    cursor: pointer
+
+li.task-item input
+    color: #434343
+    font-family: $defaultFont
+    font-size: 11px
+    background-color: transparent
+    margin-left: 3px
+    cursor: pointer
+
+li.task-item span, li.task-item input
+    display: inline-grid
+
+.bottom-border-only
+    margin: 0
+    border-radius: 0
+    border: none !important
+    border-bottom: 1px solid $btnBorder !important
+
+.dropdown
+    position: relative
+    display: inline-block
+
+.dropdown-content
+    display: grid
+    position: absolute
+    margin-top: -40px
+    padding: 3px
+    grid-template-columns: 25px 25px 25px 25px
+    background-color: white
+    border-radius: 10px
+    width: auto
+    overflow: auto
+    box-shadow: 2px 2px 2px 2px $btnBorder
+    z-index: 999999
+
+.color-grid
+    display: inline-grid
+    margin: 2px
+    height: 25px
+    cursor: pointer

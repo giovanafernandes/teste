@@ -1,0 +1,48 @@
+<div class="row window">
+    <div class="col-md-12">
+        <p id="notice"><%= notice %></p>
+        <div class="row">
+            <div class="col-6">
+                <h5 class="table-title">Funcionários</h5>
+            </div>
+            <div class="col-6" style="text-align: right;">
+                <%= link_to new_employee_path, class: "link-plusing", style: "float: right;" do %>
+                  <img src="<%= image_url("plus.svg") %>" width="30">
+                <% end %>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="plusing table-borderless">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Função</th>
+                      <th>Obra</th>
+                      <th style="text-align: center;" colspan="3">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% @employees.each do |employee| %>
+                          <tr>
+                            <td onclick="window.location='<%= employee_path(employee) %>'"><%= employee.name %></td>
+                            <td onclick="window.location='<%= employee_path(employee) %>'"><%= employee.job.description %></td>
+                            <td onclick="window.location='<%= employee_path(employee) %>'"><%= employee.work.nil? ? "Nenhuma" : "##{employee.work.id}" %></td>
+                            <td>
+                                <%= link_to edit_employee_path(employee), class: "link-plusing" do %>
+                                    <img src="<%= image_url("edit.svg") %>" width="18">
+                                <% end %>
+                            </td>
+                            <td style="text-align: right;">
+                                <%= link_to employee, method: :delete, data: { confirm: 'Deletar Funcionário? Isso o desvinculará de todas as obras.' }, class: "link-plusing" do %>
+                                    <img src="<%= image_url("delete.svg") %>" width="18">
+                                <% end %>
+                            </td>
+                          </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+             </div>
+        </div>
+    </div>
+</div>

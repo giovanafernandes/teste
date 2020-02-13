@@ -1,0 +1,49 @@
+<div class="row window">
+    <div class="col-md-12">
+        <p id="notice"><%= notice %></p>
+        <div class="row">
+            <div class="col-6">
+                <h5 class="table-title">Locais</h5>
+            </div>
+            <div class="col-6" style="text-align: right;">
+                <%= link_to new_company_path, class: "link-plusing", style: "float: right;" do %>
+                  <img src="<%= image_url("plus.svg") %>" width="30">
+                <% end %>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="plusing table-borderless">
+                  <thead>
+                    <tr>
+                      <th>Nome</th>
+                      <th>Nome Fantasia</th>
+                      <th>Cidade</th>
+                      <th style="text-align: center;" colspan="3">Ações</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <% @companies.each do |company| %>
+                          <tr>
+                            <td onclick="window.location='<%= company_path(company) %>'"><%= company.name %></td>
+                            <td onclick="window.location='<%= company_path(company) %>'"><%= company.business_name %></td>
+                            <td onclick="window.location='<%= company_path(company) %>'"><%= company.city %></td>
+                            <td>
+                                <%= link_to edit_company_path(company), class: "link-plusing" do %>
+                                    <img src="<%= image_url("edit.svg") %>" width="18">
+                                <% end %>
+                            </td>
+                            <td style="text-align: right;">
+                                <%= link_to company, method: :delete, data: { confirm: 'Deletar Empresa? Isso a desvinculará de todas as obras.' }, class: "link-plusing" do %>
+                                    <img src="<%= image_url("delete.svg") %>" width="18">
+                                <% end %>
+                            </td>
+                          </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+             </div>
+        </div>
+    </div>
+</div>

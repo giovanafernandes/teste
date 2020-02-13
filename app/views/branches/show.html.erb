@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Main:</strong>
+  <%= @branch.main %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @branch.name %>
+</p>
+
+<p>
+  <strong>Cnpj:</strong>
+  <%= @branch.cnpj %>
+</p>
+
+<p>
+  <strong>Membership:</strong>
+  <%= @branch.membership %>
+</p>
+
+<p>
+  <strong>Zip code:</strong>
+  <%= @branch.zip_code %>
+</p>
+
+<p>
+  <strong>Neighborhood:</strong>
+  <%= @branch.neighborhood %>
+</p>
+
+<p>
+  <strong>Street:</strong>
+  <%= @branch.street %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @branch.number %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @branch.state %>
+</p>
+
+<p>
+  <strong>State registration:</strong>
+  <%= @branch.state_registration %>
+</p>
+
+<%= link_to 'Edit', edit_branch_path(@branch) %> |
+<%= link_to 'Back', branches_path %>

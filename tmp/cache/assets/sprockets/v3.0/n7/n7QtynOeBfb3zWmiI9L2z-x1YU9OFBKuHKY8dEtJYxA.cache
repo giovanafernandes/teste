@@ -1,0 +1,43 @@
+I"(function() {
+  $(document).ready(function() {
+    var select_change;
+    $('#access_permission').change(function() {
+      if (!this.checked) {
+        $('#create_permission').prop('checked', false);
+        $('#edit_permission').prop('checked', false);
+        $('#delete_permission').prop('checked', false);
+        $('#user_user_type_id').val('2');
+      }
+    });
+    $('#create_permission').change(function() {
+      if (this.checked) {
+        $('#access_permission').prop('checked', true);
+      }
+    });
+    $('#edit_permission').change(function() {
+      if (this.checked) {
+        $('#access_permission').prop('checked', true);
+      }
+    });
+    $('#delete_permission').change(function() {
+      if (this.checked) {
+        $('#access_permission').prop('checked', true);
+      }
+    });
+    $('#user_user_type_id').change(function() {
+      if ($(this).val() === '1') {
+        return select_change(true);
+      } else {
+        return select_change(false);
+      }
+    });
+    select_change = function(isChecked) {
+      $('#access_permission').prop('checked', isChecked);
+      $('#create_permission').prop('checked', isChecked);
+      $('#edit_permission').prop('checked', isChecked);
+      return $('#delete_permission').prop('checked', isChecked);
+    };
+  });
+
+}).call(this);
+:ET

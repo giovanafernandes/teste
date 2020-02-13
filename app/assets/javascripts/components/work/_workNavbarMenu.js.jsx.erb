@@ -1,0 +1,83 @@
+class WorkNavbarMenu extends React.Component {
+    constructor(props)
+    {
+        super(props);
+        this.state = {};
+    }
+
+    render()
+    {
+        return (
+            <div className="container-fluid spreadsheet">
+                <div className="menu-plusing" style={{width: '100%'}}>
+                    <ul className="menu-list" id="collapse-content">
+                      <li className="navbar-item menu-item user-settings" style={{padding: 0}}>
+                          <nav className="btn-block" id="settings-link">
+                              <a href="settings">
+                                  <img src={"<%= image_url('user.svg') %>"} className="user-avatar" width="40" />
+                                  <div style={{display: 'inline-block'}}>
+                                      <i className="user-name">{ this.props.current_user.name }</i>
+                                      <i className="user-email">{ this.props.current_user.email }</i>
+                                  </div>
+                              </a>
+                              <div></div>
+                              <div style={{textAlign: 'end'}}>
+                                  <ul style={{padding: 0,margin: 5}}>
+                                      <li className="xl-item">
+                                          <a href="/help">
+                                              <img src={"<%= image_url('help.svg') %>"} width="15" />
+                                          </a>
+                                      </li>
+                                      <li className="xl-item">
+                                          <a href="/logout">
+                                              <img src={"<%= image_url('logout.svg') %>"} width="15" />
+                                          </a>
+                                      </li>
+                                  </ul>
+                              </div>
+                          </nav>
+                          <button type="button" className="btn-block" id="settings-btn">
+                              <img src={"<%= image_url('user.svg') %>"} className="user-avatar" width="40" />
+                              &nbsp;
+                              <img src={"<%= image_url('drop.svg') %>"} width="15" />
+                              <i className="user-name">{ this.props.current_user.name }</i>
+                          </button>
+                          <div className="user-settings-menu menu-hide" id="settings">
+                              <ul style={{padding: 0,margin: 0}}>
+                                  <li className="settings-header">
+                                      <div className="container">
+                                          <div className="row">
+                                              <div className="col-3" style={{margin: 0,padding: 0}}>
+                                                  <img src={"<%= image_url('user.svg') %>"} className="user-avatar" width="80" />
+                                              </div>
+                                              <div className="col-9">
+                                                  { this.props.current_user.name }
+                                                  <div className="w-100"></div>
+                                                  <i>{ this.props.current_user.email }</i>
+                                                  <div className="w-100"></div>
+                                                  <form action="/settings" method="get">
+                                                      <input type="submit" className="btn-plusing success secondary" value="Account" />
+                                                  </form>
+                                              </div>
+                                          </div>
+                                      </div>
+                                  </li>
+                                  <li className="xl-item">
+                                      <a href="/help">
+                                          <img src={"<%= image_url('help.svg') %>"} width="15" />Help
+                                      </a>
+                                  </li>
+                                  <li className="xl-item">
+                                      <a href="/logout">
+                                          <img src={"<%= image_url('logout.svg') %>"} width="15" />Sign out
+                                      </a>
+                                  </li>
+                              </ul>
+                          </div>
+                      </li>
+                    </ul>
+                </div>
+            </div>
+        )
+    }
+}

@@ -1,0 +1,218 @@
+class UserForm extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            jobs: this.props.jobs,
+            branches: this.props.branches,
+            branch_id: this.props.branch_id,
+            userTypes: this.props.user_types,
+            isOpen: false
+        };
+    }
+
+    jobCrudDialog (event) {
+        event.preventDefault();
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
+    }
+
+    renderJobs()
+    {
+        if(this.state.jobs && this.state.jobs.length)
+        {
+            var jobs = this.state.jobs.map(f => {
+                return (
+                    <option key={f.id} value={f.id}>{f.description}</option>
+                );
+            });
+        }
+        return jobs;
+    }
+
+    renderUserTypes()
+    {
+        if(this.state.userTypes && this.state.userTypes.length)
+        {
+            var userTypes = this.state.userTypes.map(f => {
+                return (
+                    <option key={f.id} value={f.id}>{f.description}</option>
+                );
+            });
+        }
+        return userTypes;
+    }
+
+    renderBranches()
+    {
+        if(this.state.branches && this.state.branches.length)
+        {
+            var branches = this.state.branches.map(f => {
+                return (
+                    <option key={f.id} value={f.id}>{f.name}</option>
+                );
+            });
+        }
+        return branches;
+    }
+
+    addNewJob(job)
+    {
+        this.setState({
+            jobs: [job].concat(this.state.jobs)
+        });
+    }
+
+    render() {
+        isCreating = this.props.user.id == null;
+
+        return (
+            <div>
+                <form className="simple_form new_user" id="new_user" noValidate="novalidate" action={isCreating ? "/users" : ("/users/" + this.props.user.id)} acceptCharset="UTF-8" method="post">
+                    {!isCreating &&
+                        <input type="hidden" name="_method" value="patch" />
+                    }
+                    <input name="utf8" type="hidden" value="✓" />
+                    <input type='hidden' name='authenticity_token' value={this.props.authenticity_token} />
+                    <hr />
+                    <div className="field form-group">
+                          <div className="form-group string optional user_name">
+                              <label className="form-control-label string optional" htmlFor="user_name">Nome completo</label>
+                          </div>
+                          <input className="form-control string optional textfield-plusing"
+                                placeholder=" Nome completo"
+                                type="text"
+                                name="user[name]"
+                                defaultValue={this.props.user.name}
+                                id="user_name" />
+                    </div>
+                    <div className="field form-group">
+                          <div className="form-group email optional user_email">
+                              <label className="form-control-label email optional" htmlFor="user_email">E-mail</label>
+                              <input className="form-control string email optional textfield-plusing"
+                                    placeholder=" E-mail"
+                                    type="email"
+                                    name="user[email]"
+                                    id="user_email"
+                                    defaultValue={this.props.user.email} />
+                          </div>
+                    </div>
+                    { isCreating &&
+                        <div className="field form-group input-grid">
+                              <div className="form-group password optional user_password">
+                                  <label className="form-control-label password optional" htmlFor="user_password">Senha</label>
+                                  <input className="form-control password optional textfield-plusing"
+                                        placeholder=" Digite a senha"
+                                        type="password"
+                                        name="user[password]"
+                                        id="user_password" />
+                              </div>
+                              <div></div>
+                              <div className="form-group password optional user_password_confirmation">
+                                  <label className="form-control-label password optional" htmlFor="user_password_confirmation">Confirme a senha</label>
+                                  <input className="form-control password optional textfield-plusing"
+                                        placeholder=" Redigite a senha"
+                                        type="password"
+                                        name="user[password_confirmation]"
+                                        id="user_password_confirmation" />
+                              </div>
+                        </div>
+                    }
+                    <div className="field">
+                          <div className="form-group select required user_branch">
+                              <label className="form-control-label select required" htmlFor="user_branch_id">
+                                  Filial <abbr title="required">*</abbr>
+                              </label>
+                              <select className="form-control select required textfield-plusing"
+                                    name="user[branch_id]"
+                                    id="user_branch_id"
+                                    defaultValue={this.props.user.branche_id}>
+                                    {this.renderBranches()}
+                              </select>
+                          </div>
+                    </div>
+                    <div className="field">
+                        <div className="form-group select required user_job">
+                            <label className="form-control-label select required" htmlFor="user_job_id">Função <abbr title="required">*</abbr></label>
+                            <a className="float-right link-plusing" onClick={(event) => this.jobCrudDialog(event)}>
+                                <img src={"<%= image_url('plus.svg') %>"} width="20" />
+                            </a>
+                            <select className="form-control select required textfield-plusing"
+                                name="user[job_id]"
+                                id="user_job_id"
+                                defaultValue={this.props.user.job_id}>
+                                { this.renderJobs() }
+                            </select>
+                        </div>
+                    </div>
+                    <div className="field form-group input-grid form-radios-list">
+                          <div className="form-group select required user_user_type">
+                              <label className="form-control-label select required" htmlFor="user_user_type_id">
+                                  Tipo <abbr title="required">*</abbr>
+                              </label>
+                              <select className="form-control select required textfield-plusing"
+                                    name="user[user_type_id]"
+                                    id="user_user_type_id"
+                                    defaultValue={this.props.user.user_type_id}>
+                                    {this.renderUserTypes()}
+                              </select>
+                          </div>
+                          <div></div>
+                          <div>
+                              <label htmlFor="access_form" className="form-control-label">
+                                  Painel de controle
+                              </label>
+                              <div className="field form-group input-grid radioslist" id="access_form">
+                                  <div>
+                                      <label className="switch form-control-label">
+                                          <input name="access[toRead]" type="hidden" value="0" />
+                                          <input id="access_permission" className="boolean optional" type="checkbox" value="1" name="access[toRead]" defaultChecked={this.props.access.toRead}/>
+                                          <span className="slider round"></span><br />
+                                              Acessar
+                                          </label>
+                                  </div>
+                                  <div></div>
+                                  <div style={{textAlign: 'center',marginRight: '9%'}}>
+                                      <label className="switch form-control-label">
+                                          <input name="access[toCreate]" type="hidden" value="0" />
+                                          <input id="create_permission" className="boolean optional" type="checkbox" value="1" name="access[toCreate]" defaultChecked={this.props.access.toCreate}/>
+                                          <span className="slider round"></span><br />
+                                          Criar
+                                      </label>
+                                  </div>
+                                  <div></div>
+                                  <div style={{textAlign: 'center',marginLeft: '9%'}}>
+                                      <label className="switch form-control-label">
+                                          <input name="access[toUpdate]" type="hidden" value="0" />
+                                          <input id="edit_permission" className="boolean optional" type="checkbox" value="1" name="access[toUpdate]" defaultChecked={this.props.access.toUpdate}/>
+                                          <span className="slider round"></span><br />
+                                          Editar
+                                      </label>
+                                  </div>
+                                  <div></div>
+                                  <div style={{textAlign: 'right'}}>
+                                      <label className="switch form-control-label">
+                                          <input name="access[toDelete]" type="hidden" value="0" />
+                                          <input id="delete_permission" className="boolean optional" type="checkbox" value="1" name="access[toDelete]" defaultChecked={this.props.access.toDelete}/>
+                                          <span className="slider round"></span><br />
+                                          Deletar
+                                      </label>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>
+                    <div className="actions">
+                        <input type="submit" name="commit" value="Salvar" className="btn btn-plusing success card-action" data-disable-with="Create Employee" />
+                    </div>
+                </form>
+                <NewJob show={this.state.isOpen}
+                    onClose={(event) => this.jobCrudDialog(event)}
+                    addNewJob={this.addNewJob.bind(this)}
+                    jobs={this.state.jobs}
+                    branch_id={this.state.branch_id}>
+                    Aqui ficará o dialog do Crud
+                </NewJob>
+            </div>
+        );
+    }
+}

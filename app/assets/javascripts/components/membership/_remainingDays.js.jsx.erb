@@ -1,0 +1,64 @@
+class RemainingDays extends React.Component
+{
+    constructor(props)
+    {
+        super(props);
+        this.state = {
+            show: true
+        }
+    }
+
+    handleFormSubmit(e)
+    {
+        e.preventDefault();
+        console.log(e);
+    }
+
+    handleKeepTrialSubmit(e)
+    {
+        e.preventDefault();
+        this.setState({ show: false });
+    }
+
+    render()
+    {
+        if(!this.state.show) {
+            return null;
+        }
+
+        return (
+              <form id="upgrade" action="/upgrade" acceptCharset="UTF-8" method="post" onSubmit={(e) => this.handleFormSubmit(e)}>
+                <input name="utf8" type="hidden" value="✓" />
+                <input type="hidden" name="authenticity_token" value={this.props.authenticity_token} />
+                <div className="warning" id="warning">
+                    <div className="warning-box container">
+                        <div className="row" style={{padding: 10,paddingTop: 25}}>
+                            <div className="col-12">
+                                <h4 id="h4-empresa">
+                                    Plusing Trial
+                                </h4>
+                                <h6 style={{fontSize: 11,marginBottom: 40}}>
+                                    Você está utilizando a versão de avaliação
+                                </h6>
+                                <p className="font-warning">
+                                    5 dias restantes
+                                </p>
+                                <p id="alert"></p>
+                                <div style={{marginTop: 60}}>
+                                    <input type="submit"
+                                        name="commit"
+                                        id="dismiss_warning"
+                                        value="Continuar avaliando"
+                                        style={{fontSize: 10,width: 'auto'}}
+                                        className="link-plusing card-option"
+                                        onClick={(e) => this.handleKeepTrialSubmit(e)} />
+                                    <input type="submit" name="commit" value="Upgrade Account" style={{fontSize: 13,width: 'auto'}} className="btn-plusing success card-action" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        )
+    }
+}

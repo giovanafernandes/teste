@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  start: 2019-12-30
+  end: 2019-12-30
+  isFinished: false
+  budget: MyString
+  Company: one
+  User: one
+
+two:
+  start: 2019-12-30
+  end: 2019-12-30
+  isFinished: false
+  budget: MyString
+  Company: two
+  User: two

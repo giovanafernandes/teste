@@ -1,0 +1,66 @@
+<%= simple_form_for @user, :defaults => { :input_html => { :class => "textfield-plusing" } } do |f| %>
+  <hr>
+  <div class="field form-group">
+      <%= f.input :name, placeholder: " Nome completo", label: " Nome completo" %>
+  </div>
+  <div class="field form-group">
+      <%= f.input :email, placeholder: " E-mail", label: " E-mail" %>
+  </div>
+
+  <div class="field form-group input-grid">
+      <%= f.input :password, placeholder: " Digite a senha", label: " Senha" %>
+      <div></div>
+      <%= f.input :password_confirmation, placeholder: " Redigite a senha", label: " Confirme a senha" %>
+  </div>
+  <div class="field">
+      <%= f.association :branch, collection: Branch.where("membership_id = ?", Branch.find(current_user.branch_id).membership_id), label: "Filial",  label_method: :name, value_method: :id, selected: 1 %>
+  </div>
+  <div class="field form-group input-grid form-radios-list">
+      <%= f.association :user_type, label: "Tipo",  label_method: :description, selected: 1 %>
+      <div></div>
+      <div>
+          <label for="access_form" class="form-control-label">
+              Painel de controle
+          </label>
+          <div class="field form-group input-grid radioslist" id="access_form">
+              <%= simple_fields_for @access do |a| %>
+                  <div>
+                      <label class="switch form-control-label">
+                          <%= a.input_field :toRead, as: :boolean, checked: @access.toRead , id: "access_permission" %>
+                          <span class="slider round"></span><br>
+                          Acessar
+                      </label>
+                  </div>
+                  <div></div>
+                  <div style="text-align: center;margin-right: 9%;">
+                      <label class="switch form-control-label">
+                          <%= a.input_field :toCreate, as: :boolean, checked: @access.toCreate, id: "create_permission" %>
+                          <span class="slider round"></span><br>
+                          Criar
+                      </label>
+                  </div>
+                  <div></div>
+                  <div style="text-align: center;margin-left: 9%;">
+                      <label class="switch form-control-label">
+                          <%= a.input_field :toUpdate, as: :boolean, checked: @access.toUpdate, id: "edit_permission" %>
+                          <span class="slider round"></span><br>
+                          Editar
+                      </label>
+                  </div>
+                  <div></div>
+                  <div style="text-align: right;">
+                      <label class="switch form-control-label">
+                          <%= a.input_field :toDelete, as: :boolean, checked: @access.toDelete, id: "delete_permission" %>
+                          <span class="slider round"></span><br>
+                          Deletar
+                      </label>
+                  </div>
+              <% end %>
+          </div>
+      </div>
+  </div>
+  <div class="actions">
+    <%= f.button :submit, value: "Salvar", class: "btn-plusing success card-action" %>
+  </div>
+<% end %>
+<input type="hidden" id="active" value="4">

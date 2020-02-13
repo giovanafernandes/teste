@@ -1,0 +1,13 @@
+<%= simple_form_for @employee, :defaults => { :input_html => { :class => "textfield-plusing" } } do |f| %>
+  <hr>
+  <div class="field form-group">
+      <%= f.input :name, placeholder: " Nome", label: " Nome completo" %>
+  </div>
+  <div class="field">
+      <%= f.association :job, label: "Função", label_method: :description %>
+  </div>
+  <div class="actions">
+    <%= f.button :submit, value: "Salvar", class: "btn-plusing success card-action" %>
+  </div>
+<% end %>
+<input type="hidden" id="active" value="5">
